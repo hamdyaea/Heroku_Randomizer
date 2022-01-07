@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Developer : Hamdy Abou El Anein
-hamdy.aea@protonmail.com
+# hamdy.aea@protonmail.com
 
 
 from flask import Flask, render_template
