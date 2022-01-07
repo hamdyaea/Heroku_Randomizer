@@ -12,7 +12,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     # take the visitor ip
-    yourip = request.remote_addr
+    #yourip = request.remote_addr
+    yourip = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
     
     # if it's the first time. visitors.txt must contain at least 0.
     countfile = "visitors.txt"
