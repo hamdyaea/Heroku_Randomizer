@@ -27,6 +27,7 @@ def deleter():
     dbx.files_delete("/"+filename)
 
 def main():
+    global counter
     try:
         down()
     except:
