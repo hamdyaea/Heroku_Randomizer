@@ -65,7 +65,7 @@ def main():
     maxcountry = max(set(country), key=country.count)
              
     country = list(dict.fromkeys(country))
-    country = ' '.join(map(str, country))
+    country = ', '.join(map(str, country))
 
     deleter()
 
