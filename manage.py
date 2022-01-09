@@ -86,6 +86,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    global yourip
     # take the visitor ip
     yourip = request.environ.get("HTTP_X_FORWARDED_FOR", request.remote_addr)
     
