@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://randomizatorh.herokuapp.com/sitemap.xml
