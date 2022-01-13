@@ -14,7 +14,7 @@ import requests
 drkey = os.environ["dropkey"]
 
 # for test only
-#drkey = "XXX"
+#drkey = "XXXXX"
 
 
 dbx = dropbox.Dropbox(drkey)
@@ -24,12 +24,14 @@ countryfile = "countrylist.txt"
 
 def geo():
     global ipcountry
+    
     backadrr = "https://www.ipinfo.io/"
     fulladd = backadrr + str(yourip)
 
     r = requests.get(fulladd)
     data = r.json()
     ipcountry = data["country"]
+    
     # for test only uncomment
     #ipcountry = "CH"
 

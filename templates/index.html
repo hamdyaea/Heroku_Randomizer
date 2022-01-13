@@ -1,17 +1,89 @@
-<div style="background-image: url('/static/img/back.jpg');"> 
-<h1><span style="color: #00ff00;">Your random number between 0 and 1000 is : {{ random_number }}</span></h1>
-<p>&nbsp;</p>
-<p><span style="color: white;">This is a proof of concept app on Heroku.</span></p>
-<p>&nbsp;</p>
-<p><span style="color: white;">Source code : https://github.com/hamdyaea/Heroku_Randomizer</span></p>
-<p>&nbsp;</p>
-<p><span style="color: white;">Number of executions is : {{  counter  }}</span></p>
-<p>&nbsp;</p>
-<p><span style="color: white;">Your public ip is : {{  yourip }} from the country : {{  ipcountry  }}</span></p>
-<p>&nbsp;</p>
-<p><span style="color: white;">Most executions come from the country : {{  maxcountry  }}</span></p>
-<p>&nbsp;</p>
-<p><span style="color: white;">The list of all the countries which have executed : {{  country  }}</span></p>
-<p>&nbsp;</p>
-<p><span style="color: white;">Developer : Hamdy Abou El Anein</span></p>
-<p><span style="color: white;">hamdy.aea@protonmail.com</span></p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Randomizatorh</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
+    <link href="https://randomizatorh.herokuapp.com/static/css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
+    <link href="https://randomizatorh.herokuapp.com/static/fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <link href="https://randomizatorh.herokuapp.com/static/css/templatemo-diagoona.css" rel="stylesheet" />
+</head>
+
+<body>
+     <style>
+body {
+  background-image: url('https://randomizatorh.herokuapp.com/static/img/diagoona-bg-1.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+</style> 
+    <div class="tm-container">        
+        <div>
+            <div class="tm-row pt-4">
+                <div class="tm-col-left">
+                    <div class="tm-site-header media">
+                        <i class="fas fa-umbrella-beach fa-3x mt-1 tm-logo"></i>
+                        <div class="media-body">
+                            <h1 class="tm-sitename text-uppercase">Randomizatorh</h1>
+                            <p class="tm-slogon">A web app in Python3 and Flask</p>
+                        </div>        
+                    </div>
+                </div>
+                <div class="tm-col-right">
+                    <nav class="navbar navbar-expand-lg" id="tm-main-nav">
+                        <button class="navbar-toggler toggler-example mr-0 ml-auto" type="button" 
+                            data-toggle="collapse" data-target="#navbar-nav" 
+                            aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span><i class="fas fa-bars"></i></span>
+                        </button>
+                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
+                        </div>                        
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="tm-row">
+                <div class="tm-col-left"></div>
+                <main class="tm-col-right">
+                    <section class="tm-content">
+                        <h3 class="mb-5 tm-content-title">Random num between 0 and 1000 is : {{ random_number }}</h3>
+                        <p class="mb-5">This is a proof of concept app on Heroku.</p>
+                        <p class="mb-5">Source code : https://github.com/hamdyaea/Heroku_Randomizer</p>
+                        <p class="mb-5">Number of executions is : {{  counter  }}</p>
+                        <p class="mb-5">Your public ip is : {{  yourip }} from the country : {{  ipcountry  }}</p>
+                        <p class="mb-5">Most executions come from the country : {{  maxcountry  }}</p>
+                        <p class="mb-5">The list of all the countries which have executed : {{  country  }}</p>
+                    </section>
+                </main>
+            </div>
+        </div>        
+
+        <div class="tm-row">
+            <div class="tm-col-left text-center">            
+                <ul class="tm-bg-controls-wrapper">
+                </ul>            
+            </div>        
+            <div class="tm-col-right tm-col-footer">
+                <footer class="tm-site-footer text-right">
+                 Developer : Hamdy Abou El Anein    -    hamdy.aea@protonmail.com
+                </footer>
+            </div>  
+        </div>
+
+        <!-- Diagonal background design -->
+        <div class="tm-bg">
+            <div class="tm-bg-left"></div>
+            <div class="tm-bg-right"></div>
+        </div>
+    </div>
+
+    <script src="https://randomizatorh.herokuapp.com/static/js/jquery-3.4.1.min.js"></script>
+    <script src="https://randomizatorh.herokuapp.com/static/js/bootstrap.min.js"></script>
+    <script src="https://randomizatorh.herokuapp.com/static/js/jquery.backstretch.min.js"></script>
+    <script src="https://randomizatorh.herokuapp.com//static/js/templatemo-script.js"></script>
+</body>
+</html>
