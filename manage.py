@@ -1,110 +1,47 @@
 #!/usr/bin/env python3
+# Developer: Hamdy Abou El Anein
+# Contact: hamdy.aea@protonmail.com
+# SPDX-License-Identifier: GPL-3.0-or-later
+"""Privacy-preserving Flask random-number demo; no Dropbox or IP lookups."""
+from __future__ import annotations
 
-# Developer : Hamdy Abou El Anein
-# hamdy.aea@protonmail.com
-
-
-from flask import Flask, render_template, request
-import random
 import os
-import dropbox
-import json
-import requests
+from pathlib import Path
+import secrets
+import sqlite3
 
-drkey = os.environ["dropkey"]
-
-# for test only
-#drkey = "XXXXX"
+from flask import Flask, render_template
 
 
-dbx = dropbox.Dropbox(drkey)
+def create_app(database_path: str | Path | None = None) -> Flask:
+    app = Flask(__name__)
+    if database_path is None:
+        database_path = os.environ.get("RANDOMIZER_DATABASE")
+    database = Path(database_path) if database_path else Path(app.instance_path) / "visits.sqlite3"
 
-filename = "visitors.csv"
-countryfile = "countrylist.txt"
+    def next_count() -> int:
+        database.parent.mkdir(parents=True, exist_ok=True)
+        with sqlite3.connect(database, timeout=10) as connection:
+            connection.execute("CREATE TABLE IF NOT EXISTS counters (name TEXT PRIMARY KEY, value INTEGER NOT NULL)")
+            connection.execute(
+                "INSERT INTO counters (name, value) VALUES ('visits', 1) "
+                "ON CONFLICT(name) DO UPDATE SET value=value+1"
+            )
+            return int(connection.execute("SELECT value FROM counters WHERE name='visits'").fetchone()[0])
 
-def geo():
-    global ipcountry
-    
-    backadrr = "https://www.ipinfo.io/"
-    fulladd = backadrr + str(yourip)
+    @app.get("/")
+    def index():
+        return render_template("index.html", random_number=secrets.randbelow(1000) + 1,
+                               counter=next_count())
 
-    r = requests.get(fulladd)
-    data = r.json()
-    ipcountry = data["country"]
-    
-    # for test only uncomment
-    #ipcountry = "CH"
+    @app.get("/health")
+    def health():
+        return {"status": "ok"}
 
-def up():
-    with open(filename, "rb") as f:
-        dbx.files_upload(f.read(), "/" + filename)
-    
-    with open(countryfile, "rb") as f:
-        dbx.files_upload(f.read(), "/" + countryfile)
-
-def down():
-    dbx.files_download_to_file(filename, "/" + filename)
-    dbx.files_download_to_file(countryfile, "/" + countryfile)
-
-def deleter():
-    dbx.files_delete("/" + filename)
-    dbx.files_delete("/" + countryfile)
+    return app
 
 
-def main():
-    global counter,country, maxcountry
+app = create_app()
 
-    down()
-
-    f = open(filename, "r")
-    value = f.read()
-
-    counter = int(value) + 1
-    
-    with open(countryfile) as f:
-        country = [line.rstrip() for line in f]
-    
-    maxcountry = max(set(country), key=country.count)
-             
-    country = list(dict.fromkeys(country))
-    country = list(filter(None, country))
-    country = ', '.join(map(str, country))
-
-    deleter()
-
-    f = open(filename, "w")
-    f.write(str(counter))
-    f.close()
-    
-    f= open(countryfile, "a")
-    f.write("\n")
-    f.write(ipcountry)
-    f.close()
-  
-    up()
-
-
-app = Flask(__name__)
-
-
-@app.route("/")
-def index():
-    global yourip
-    # take the visitor ip
-    yourip = request.environ.get("HTTP_X_FORWARDED_FOR", request.remote_addr)
-    
-    geo()
-  
-    main()
-
-
-    random_number = random.randint(1, 1000)
-    return render_template(
-        "index.html",
-        random_number=random_number,
-        counter=counter,
-        yourip=yourip,
-        ipcountry=ipcountry,
-        country=country,
-        maxcountry=maxcountry
-    )
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=5000, debug=False)
